@@ -10,16 +10,17 @@ def create_lkas11(packer, frame, car_fingerprint, apply_steer, steer_req,
                   cut_steer_temp, lkas11, sys_warning, sys_state, enabled,
                   left_lane, right_lane,
                   left_lane_depart, right_lane_depart, bus, ldws, cnt):
-  values = lkas11
-  values["CF_Lkas_LdwsSysState"] = sys_state
-  values["CF_Lkas_SysWarning"] = 3 if sys_warning else 0
-  values["CF_Lkas_LdwsLHWarning"] = left_lane_depart
-  values["CF_Lkas_LdwsRHWarning"] = right_lane_depart
-  values["CR_Lkas_StrToqReq"] = apply_steer
-  values["CF_Lkas_ActToi"] = steer_req and not cut_steer_temp
-  values["CF_Lkas_ToiFlt"] = cut_steer_temp  # seems to allow actuation on CR_Lkas_StrToqReq
-  values["CF_Lkas_MsgCount"] = cnt
-  values["CF_Lkas_Chksum"] = 0
+  values = {
+    "CF_Lkas_LdwsSysState": sys_state,
+    "CF_Lkas_SysWarning": 3 if sys_warning else 0,
+    "CF_Lkas_LdwsLHWarning": left_lane_depart,
+    "CF_Lkas_LdwsRHWarning": right_lane_depart,
+    "CR_Lkas_StrToqReq": apply_steer,
+    "CF_Lkas_ActToi": steer_req and not cut_steer_temp,
+    "CF_Lkas_ToiFlt": cut_steer_temp,  # seems to allow actuation on CR_Lkas_StrToqReq
+    "CF_Lkas_MsgCount": cnt,
+    "CF_Lkas_Chksum": 0,
+  }
 
   if car_fingerprint == CAR.GRANDEUR_HEV_IG:
     nSysWarnVal = 9
